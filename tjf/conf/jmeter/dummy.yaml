@@ -1,0 +1,23 @@
+--- # Could fail avg-rt with msg "Done performing with code: 3"
+execution:
+- concurrency: 1
+  hold-for: 2m
+  iterations: 24
+  ramp-up: 6s
+  scenario: simple
+
+scenarios:
+  simple:
+    script: DummySampler.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+services:
+- module: passfail
+  criteria:
+  - avg-rt of Dummy>300ms for 10s, continue as failed
+  - fail of Dummy>50% for 10s, stop as failed
+  - avg-rt of DummySlow>800ms for 10s, continue as failed
+  - fail of DummySlow>50% for 10s, stop as failed

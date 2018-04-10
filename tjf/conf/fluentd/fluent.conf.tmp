@@ -1,0 +1,36 @@
+<source>
+  @type tail
+  path /var/log/jmeter/*/kpi.jtl
+  pos_file /var/log/td-agent/jmeter.jtl.pos
+  read_from_head true
+  tag jmeter.*
+  format csv
+  keys timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,grpThreads,allThreads,Latency,IdleTime
+  types timeStamp:time,elapsed:integer,label:string,reponseCode:integer,responseMessage:string,threadName:string,dataType:string,success:bool,failureMessage:string,bytes:integer,grpThreads:integer,allThreads:integer,Latency:integer,IdleTime:integer
+  time_key timeStamp
+  time_format "%Q"
+  read_lines_limit 100
+  refresh_interval 5
+</source>
+
+<filter jmeter.**>
+  @type record_transformer
+  enable_ruby true
+  <record>
+    hostname "#{Socket.gethostname}"
+    testName "${testName}"
+  </record>
+</filter>
+
+<match jmeter.**>
+  @type elasticsearch
+  host ${es_host_ip}
+  port ${es_host_port}
+  index_name fluentd
+  type_name fluentd
+  logstash_format true
+  logstash_prefix jmeter
+  include_tag_key true
+  tag_key "@log_name"
+  flush_interval 1s
+</match>

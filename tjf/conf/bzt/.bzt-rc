@@ -1,0 +1,3 @@
+---
+settings:
+  artifacts-dir: /var/log/jmeter/%Y-%m-%d_%H-%M-%S.%f # path where to save artifacts, default is %Y-%m-%d_%H-%M-%S.%f
