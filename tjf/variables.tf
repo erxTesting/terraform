@@ -15,7 +15,7 @@ variable "aws_region" {
 
 variable "subnet_id" {
     description = "Subnet ID to use in VPC",
-    default = "subnet-3226c86a"
+    default = "subnet-12345678"
 }
 
 variable "instance_type" {
@@ -32,20 +32,19 @@ variable "instance_name" {
 variable "aws_security_group" {
     description = "The security group to apply",
     default = {
-        id = "sg-32c32b4b"
+        id = "sg-12345678"
     }
 }
 
 variable "aws_amis" {
     default = {
-        us-east-1 = "ami-c83360df"
+        us-east-1 = "ami-12345678"
     }
 }
 
 variable "es_host_ip" {
     description = "Elasticsearch host IP",
-    default = "elasticsearch.ss.frontlineeducation.com"
-    #default = "10.111.64.154"
+    default = "change~me.com"
 }
 
 variable "es_host_port" {
@@ -56,5 +55,4 @@ variable "es_host_port" {
 variable "testName" {
   description = "Test name tag for Elasticsearch",
   default ="abs_ins"
-  #default ="dummy"
 }
